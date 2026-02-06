@@ -26,10 +26,10 @@ stats() {
   echo "━━━━━━━━━━ SYSTEM STATUS ━━━━━━━━━━"
   printf "🖥  Host     : %s\n" "$(hostname)"
   printf "⏱  Uptime   : %s\n" "$(uptime -p)"
-  printf "💾 RAM      : %s / %s\n" \
+  printf "💾  RAM      : %s / %s\n" \
     "$(free -h | awk '/Mem:/ {print $3}')" \
     "$(free -h | awk '/Mem:/ {print $2}')"
-  printf "📦 Disk     : %s / %s\n" \
+  printf "📦  Disk     : %s / %s\n" \
     "$(df -h / | awk 'NR==2 {print $3}')" \
     "$(df -h / | awk 'NR==2 {print $2}')"
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

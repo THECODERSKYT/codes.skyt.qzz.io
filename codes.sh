@@ -4,10 +4,10 @@
 #   ROOT Multi-Tool By SUNNYGAMINGPE
 # =========================================
 
-# Colors (limited, clean)
-Y='\033[1;33m'
-C='\033[1;36m'
+# Minimal colors (NO GREEN)
 M='\033[1;35m'
+C='\033[1;36m'
+Y='\033[1;33m'
 R='\033[1;31m'
 N='\033[0m'
 
@@ -21,7 +21,7 @@ loading() {
   echo
 }
 
-# System statistics (FIXED & ALIGNED)
+# System statistics (FIXED FORMAT)
 stats() {
   echo "━━━━━━━━━━ SYSTEM STATUS ━━━━━━━━━━"
   printf "🖥  Host     : %s\n" "$(hostname)"
@@ -62,7 +62,6 @@ while true; do
   read opt
 
   case "$opt" in
-
     1)
       clear
       echo "Applying SSH FiX..."
@@ -76,21 +75,18 @@ ChallengeResponseAuthentication no
 UsePAM yes
 Subsystem sftp /usr/lib/openssh/sftp-server
 EOF
-
 systemctl restart ssh 2>/dev/null || service ssh restart
 passwd root
 '
-      echo
       echo "SSH FiX completed."
       read -p "Press ENTER to return..."
       ;;
 
     2)
       clear
-      echo "Running IDX VPS script..."
+      echo "Running IDX VPS..."
       loading
       bash <(curl -fsSL https://raw.githubusercontent.com/jishnu-limited/app-build-journey/refs/heads/main/vpmakerkvmidx)
-      echo
       echo "IDX VPS completed."
       read -p "Press ENTER to return..."
       ;;
@@ -105,10 +101,7 @@ passwd root
 
       cd vps123 || { echo "vps123 directory not found."; read; continue; }
 
-      if [ ! -d ".idx" ]; then
-        mkdir .idx
-      fi
-
+      mkdir -p .idx
       cd .idx || exit
 
       cat <<'EOF' > dev.nix
@@ -157,7 +150,6 @@ passwd root
 }
 EOF
 
-      echo
       echo "IDX VPS SETUP completed."
       read -p "Press ENTER to return..."
       ;;

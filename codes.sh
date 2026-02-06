@@ -4,7 +4,7 @@
 #   Multi-Tool By SUNNYGAMINGPE
 # =========================================
 
-# Minimal colors (no green)
+# Minimal colors (no green, no emoji style)
 M='\033[1;35m'
 C='\033[1;36m'
 Y='\033[1;33m'
@@ -21,15 +21,15 @@ loading() {
   echo
 }
 
-# System statistics (clean & aligned)
+# System statistics (clean & aligned, no emoji)
 stats() {
   echo "━━━━━━━━━━ SYSTEM STATUS ━━━━━━━━━━"
-  printf "🖥  Host     : %s\n" "$(hostname)"
-  printf "⏱  Uptime   : %s\n" "$(uptime -p)"
-  printf "💾  RAM      : %s / %s\n" \
+  printf "Host     : %s\n" "$(hostname)"
+  printf "Uptime   : %s\n" "$(uptime -p)"
+  printf "RAM      : %s / %s\n" \
     "$(free -h | awk '/Mem:/ {print $3}')" \
     "$(free -h | awk '/Mem:/ {print $2}')"
-  printf "📦  Disk     : %s / %s\n" \
+  printf "Disk     : %s / %s\n" \
     "$(df -h / | awk 'NR==2 {print $3}')" \
     "$(df -h / | awk 'NR==2 {print $2}')"
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -48,6 +48,7 @@ while true; do
   echo "[ 1 ] SSH FiX"
   echo "[ 2 ] IDX VPS"
   echo "[ 3 ] IDX VPS SETUP"
+  echo "[ 4 ] KVM VPS"
   echo "[ 0 ] Exit"
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   echo
@@ -55,6 +56,7 @@ while true; do
   read opt
 
   case "$opt" in
+
     1)
       clear
       echo "Applying SSH FiX..."
@@ -68,10 +70,10 @@ ChallengeResponseAuthentication no
 UsePAM yes
 Subsystem sftp /usr/lib/openssh/sftp-server
 EOF
+
 systemctl restart ssh 2>/dev/null || service ssh restart
 passwd root
 '
-      echo
       echo "SSH FiX completed."
       read -p "Press ENTER to return..."
       ;;
@@ -81,14 +83,13 @@ passwd root
       echo "Running IDX VPS..."
       loading
       bash <(curl -fsSL https://raw.githubusercontent.com/jishnu-limited/app-build-journey/refs/heads/main/vpmakerkvmidx)
-      echo
       echo "IDX VPS completed."
       read -p "Press ENTER to return..."
       ;;
 
     3)
       clear
-      echo "Cleaning old files..."
+      echo "Running IDX VPS SETUP..."
       loading
 
       cd || exit
@@ -145,8 +146,23 @@ passwd root
 }
 EOF
 
-      echo
       echo "IDX VPS SETUP completed."
+      read -p "Press ENTER to return..."
+      ;;
+
+    4)
+      clear
+      echo "Starting KVM VPS setup..."
+      loading
+
+      bash <(curl -fsSL https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/vm/dd.sh)
+
+      echo "First KVM script completed."
+      loading
+
+      bash <(curl -fsSL https://raw.githubusercontent.com/JishnuTheGamer/Vps/refs/heads/main/n)
+
+      echo "KVM VPS setup completed."
       read -p "Press ENTER to return..."
       ;;
 

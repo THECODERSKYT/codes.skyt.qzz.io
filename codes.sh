@@ -4,54 +4,58 @@
 #   Multi-Tool By SUNNYGAMINGPE
 # =========================================
 
-# Minimal colors (no green)
-M='\033[1;35m'
-C='\033[1;36m'
-Y='\033[1;33m'
-R='\033[1;31m'
-N='\033[0m'
+# ===== STRONG COLORS (VISIBLE EVERYWHERE) =====
+M='\033[1;35m'   # Magenta
+C='\033[1;36m'   # Cyan
+Y='\033[1;33m'   # Yellow
+B='\033[1;34m'   # Blue
+R='\033[1;31m'   # Red
+W='\033[1;37m'   # White
+N='\033[0m'      # Reset
 
 # Loading bar
 loading() {
-  echo -ne "Loading "
-  for i in {1..12}; do
-    echo -ne "█"
-    sleep 0.07
+  echo -ne "${C}Loading ${N}"
+  for i in {1..15}; do
+    echo -ne "${B}█${N}"
+    sleep 0.06
   done
   echo
 }
 
 # System statistics
 stats() {
-  echo "━━━━━━━━━━ SYSTEM STATUS ━━━━━━━━━━"
-  printf "Host     : %s\n" "$(hostname)"
-  printf "Uptime   : %s\n" "$(uptime -p)"
-  printf "RAM      : %s / %s\n" \
+  echo -e "${M}━━━━━━━━━━ SYSTEM STATUS ━━━━━━━━━━${N}"
+  printf "${W}Host     :${N} %s\n" "$(hostname)"
+  printf "${W}Uptime   :${N} %s\n" "$(uptime -p)"
+  printf "${W}RAM      :${N} %s / %s\n" \
     "$(free -h | awk '/Mem:/ {print $3}')" \
     "$(free -h | awk '/Mem:/ {print $2}')"
-  printf "Disk     : %s / %s\n" \
+  printf "${W}Disk     :${N} %s / %s\n" \
     "$(df -h / | awk 'NR==2 {print $3}')" \
     "$(df -h / | awk 'NR==2 {print $2}')"
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo -e "${M}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${N}"
 }
 
 while true; do
   clear
 
-  echo -e "${M}Multi-Tool By SUNNYGAMINGPE${N}"
+  echo -e "${B}════════════════════════════════════${N}"
+  echo -e "${Y}   ROOT Multi-Tool By SUNNYGAMINGPE${N}"
+  echo -e "${B}════════════════════════════════════${N}"
   echo
 
   stats
   echo
 
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  echo "[ 1 ] SSH FiX"
-  echo "[ 2 ] IDX VPS"
-  echo "[ 3 ] IDX VPS SETUP"
-  echo "[ 4 ] KVM VPS"
-  echo "[ 5 ] CodingHub"
-  echo "[ 0 ] Exit"
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo -e "${C}━━━━━━━━━━━━ MENU ━━━━━━━━━━━━${N}"
+  echo -e "${Y}[ 1 ]${N} SSH FiX"
+  echo -e "${Y}[ 2 ]${N} IDX VPS"
+  echo -e "${Y}[ 3 ]${N} IDX VPS SETUP"
+  echo -e "${Y}[ 4 ]${N} KVM VPS"
+  echo -e "${Y}[ 5 ]${N} CodingHub"
+  echo -e "${Y}[ 0 ]${N} Exit"
+  echo -e "${C}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${N}"
   echo
   echo -ne "root@SurvivalNodes~$ "
   read opt
@@ -60,7 +64,7 @@ while true; do
 
     1)
       clear
-      echo "Applying SSH FiX..."
+      echo -e "${B}Applying SSH FiX...${N}"
       loading
 
       sudo bash -c 'cat <<EOF > /etc/ssh/sshd_config
@@ -75,28 +79,28 @@ EOF
 systemctl restart ssh 2>/dev/null || service ssh restart
 passwd root
 '
-      echo "SSH FiX completed."
+      echo -e "${C}SSH FiX completed.${N}"
       read -p "Press ENTER to return..."
       ;;
 
     2)
       clear
-      echo "Running IDX VPS..."
+      echo -e "${B}Running IDX VPS...${N}"
       loading
       bash <(curl -fsSL https://raw.githubusercontent.com/jishnu-limited/app-build-journey/refs/heads/main/vpmakerkvmidx)
-      echo "IDX VPS completed."
+      echo -e "${C}IDX VPS completed.${N}"
       read -p "Press ENTER to return..."
       ;;
 
     3)
       clear
-      echo "Running IDX VPS SETUP..."
+      echo -e "${B}Running IDX VPS SETUP...${N}"
       loading
 
       cd || exit
       rm -rf myapp flutter
 
-      cd vps123 || { echo "vps123 directory not found."; read; continue; }
+      cd vps123 || { echo -e "${R}vps123 directory not found.${N}"; read; continue; }
 
       mkdir -p .idx
       cd .idx || exit
@@ -130,7 +134,6 @@ passwd root
 
     workspace = {
       onCreate = { };
-
       onStart = {
         autoRun = ''
           echo "Running auto.sh..."
@@ -147,40 +150,37 @@ passwd root
 }
 EOF
 
-      echo "IDX VPS SETUP completed."
+      echo -e "${C}IDX VPS SETUP completed.${N}"
       read -p "Press ENTER to return..."
       ;;
 
     4)
       clear
-      echo "Starting KVM VPS setup..."
+      echo -e "${B}Starting KVM VPS setup...${N}"
       loading
       bash <(curl -fsSL https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/vm/dd.sh)
-
-      echo "First KVM script completed."
       loading
       bash <(curl -fsSL https://raw.githubusercontent.com/JishnuTheGamer/Vps/refs/heads/main/n)
-
-      echo "KVM VPS setup completed."
+      echo -e "${C}KVM VPS setup completed.${N}"
       read -p "Press ENTER to return..."
       ;;
 
     5)
       clear
-      echo "Running CodingHub..."
+      echo -e "${B}Running CodingHub...${N}"
       loading
       bash <(curl -s https://ptero.nobitapro.online)
-      echo "CodingHub completed."
+      echo -e "${C}CodingHub completed.${N}"
       read -p "Press ENTER to return..."
       ;;
 
     0)
-      echo "Exiting..."
+      echo -e "${R}Exiting...${N}"
       exit 0
       ;;
 
     *)
-      echo "Invalid option."
+      echo -e "${R}Invalid option.${N}"
       sleep 1
       ;;
   esac

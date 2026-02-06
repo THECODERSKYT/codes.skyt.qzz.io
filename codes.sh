@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # =========================================
-#   ROOT Multi-Tool By SUNNYGAMINGPE
+#   Multi-Tool By SUNNYGAMINGPE
 # =========================================
 
-# Minimal colors (NO GREEN)
+# Minimal colors (no green)
 M='\033[1;35m'
 C='\033[1;36m'
 Y='\033[1;33m'
@@ -21,7 +21,7 @@ loading() {
   echo
 }
 
-# System statistics (FIXED FORMAT)
+# System statistics (clean & aligned)
 stats() {
   echo "━━━━━━━━━━ SYSTEM STATUS ━━━━━━━━━━"
   printf "🖥  Host     : %s\n" "$(hostname)"
@@ -38,14 +38,7 @@ stats() {
 while true; do
   clear
 
-  echo -e "${M}"
-  echo "██████╗  ██████╗  ██████╗ ████████╗"
-  echo "██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝"
-  echo "██████╔╝██║   ██║██║   ██║   ██║   "
-  echo "██╔══██╗██║   ██║██║   ██║   ██║   "
-  echo "██║  ██║╚██████╔╝╚██████╔╝   ██║   "
-  echo "╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   "
-  echo -e "ROOT Multi-Tool By SUNNYGAMINGPE${N}"
+  echo -e "${M}Multi-Tool By SUNNYGAMINGPE${N}"
   echo
 
   stats
@@ -78,6 +71,7 @@ EOF
 systemctl restart ssh 2>/dev/null || service ssh restart
 passwd root
 '
+      echo
       echo "SSH FiX completed."
       read -p "Press ENTER to return..."
       ;;
@@ -87,6 +81,7 @@ passwd root
       echo "Running IDX VPS..."
       loading
       bash <(curl -fsSL https://raw.githubusercontent.com/jishnu-limited/app-build-journey/refs/heads/main/vpmakerkvmidx)
+      echo
       echo "IDX VPS completed."
       read -p "Press ENTER to return..."
       ;;
@@ -150,6 +145,7 @@ passwd root
 }
 EOF
 
+      echo
       echo "IDX VPS SETUP completed."
       read -p "Press ENTER to return..."
       ;;

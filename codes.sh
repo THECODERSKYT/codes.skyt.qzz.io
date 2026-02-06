@@ -1,179 +1,94 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# =========================================
-#   Multi-Tool By SUNNYGAMINGPE
-# =========================================
+# ===== COLORS (NO GREEN) =====
+RED='\033[1;31m'
+BLUE='\033[1;34m'
+CYAN='\033[1;36m'
+PURPLE='\033[1;35m'
+YELLOW='\033[1;33m'
+WHITE='\033[1;37m'
+RESET='\033[0m'
 
-# Minimal colors (no green, no emoji style)
-M='\033[1;35m'
-C='\033[1;36m'
-Y='\033[1;33m'
-R='\033[1;31m'
-N='\033[0m'
-
-# Loading bar
-loading() {
-  echo -ne "Loading "
-  for i in {1..12}; do
-    echo -ne "█"
-    sleep 0.07
-  done
-  echo
-}
-
-# System statistics (clean & aligned, no emoji)
-stats() {
-  echo "━━━━━━━━━━ SYSTEM STATUS ━━━━━━━━━━"
-  printf "Host     : %s\n" "$(hostname)"
-  printf "Uptime   : %s\n" "$(uptime -p)"
-  printf "RAM      : %s / %s\n" \
-    "$(free -h | awk '/Mem:/ {print $3}')" \
-    "$(free -h | awk '/Mem:/ {print $2}')"
-  printf "Disk     : %s / %s\n" \
-    "$(df -h / | awk 'NR==2 {print $3}')" \
-    "$(df -h / | awk 'NR==2 {print $2}')"
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-}
+clear
 
 while true; do
-  clear
+clear
 
-  echo -e "${M}Multi-Tool By SUNNYGAMINGPE${N}"
-  echo
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+echo -e "${WHITE}        ROOT Multi-Tool By SUNNYGAMINGPE${RESET}"
+echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+echo
+echo -e "${CYAN}━━━━━━━━━━ SYSTEM STATUS ━━━━━━━━━━${RESET}"
+echo -e "${WHITE}Host     : $(hostname)${RESET}"
+echo -e "${WHITE}Uptime   : $(uptime -p)${RESET}"
+echo -e "${WHITE}RAM      : $(free -h | awk '/Mem:/ {print $3 "/" $2}')${RESET}"
+echo -e "${WHITE}Disk     : $(df -h / | awk 'NR==2 {print $3 "/" $2}')${RESET}"
+echo
+echo -e "${BLUE}━━━━━━━━━━ MENU ━━━━━━━━━━${RESET}"
+echo -e "${YELLOW}1) SSH Fix${RESET}"
+echo -e "${YELLOW}2) IDX VPS${RESET}"
+echo -e "${YELLOW}3) KVM VPS${RESET}"
+echo -e "${YELLOW}0) Exit${RESET}"
+echo
+read -p "Select Option : " opt
 
-  stats
-  echo
+case $opt in
 
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  echo "[ 1 ] SSH FiX"
-  echo "[ 2 ] IDX VPS"
-  echo "[ 3 ] IDX VPS SETUP"
-  echo "[ 4 ] KVM VPS"
-  echo "[ 0 ] Exit"
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  echo
-  echo -ne "root@SurvivalNodes~$ "
-  read opt
+1)
+clear
+echo -e "${BLUE}Running SSH Fix...${RESET}"
+sleep 1
 
-  case "$opt" in
-
-    1)
-      clear
-      echo "Applying SSH FiX..."
-      loading
-
-      sudo bash -c 'cat <<EOF > /etc/ssh/sshd_config
+sudo bash -c 'cat <<EOF > /etc/ssh/sshd_config
 PasswordAuthentication yes
 PermitRootLogin yes
 PubkeyAuthentication no
 ChallengeResponseAuthentication no
 UsePAM yes
+
 Subsystem sftp /usr/lib/openssh/sftp-server
-EOF
+EOF'
 
 systemctl restart ssh 2>/dev/null || service ssh restart
 passwd root
-'
-      echo "SSH FiX completed."
-      read -p "Press ENTER to return..."
-      ;;
 
-    2)
-      clear
-      echo "Running IDX VPS..."
-      loading
-      bash <(curl -fsSL https://raw.githubusercontent.com/jishnu-limited/app-build-journey/refs/heads/main/vpmakerkvmidx)
-      echo "IDX VPS completed."
-      read -p "Press ENTER to return..."
-      ;;
+echo
+echo -e "${CYAN}SSH Fix Completed. Returning to menu...${RESET}"
+sleep 2
+;;
 
-    3)
-      clear
-      echo "Running IDX VPS SETUP..."
-      loading
+2)
+clear
+echo -e "${BLUE}Launching IDX VPS Tool...${RESET}"
+sleep 1
+bash <(curl -fsSL https://raw.githubusercontent.com/jishnu-limited/app-build-journey/refs/heads/main/vpmakerkvmidx)
+echo
+echo -e "${CYAN}Task Finished. Returning to menu...${RESET}"
+sleep 2
+;;
 
-      cd || exit
-      rm -rf myapp flutter
+3)
+clear
+echo -e "${BLUE}Launching KVM VPS Setup...${RESET}"
+sleep 1
+bash <(curl -fsSL https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/vm/dd.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/JishnuTheGamer/Vps/refs/heads/main/n)
+echo
+echo -e "${CYAN}KVM VPS Setup Done. Returning to menu...${RESET}"
+sleep 2
+;;
 
-      cd vps123 || { echo "vps123 directory not found."; read; continue; }
+0)
+echo -e "${RED}Exiting Tool...${RESET}"
+sleep 1
+clear
+exit
+;;
 
-      mkdir -p .idx
-      cd .idx || exit
+*)
+echo -e "${RED}Invalid option! Try again...${RESET}"
+sleep 1
+;;
 
-      cat <<'EOF' > dev.nix
-{ pkgs, ... }: {
-  channel = "stable-24.05";
-
-  packages = with pkgs; [
-    unzip
-    openssh
-    git
-    qemu_kvm
-    sudo
-    cdrkit
-    cloud-utils
-    qemu
-    nano
-    curl
-  ];
-
-  env = {
-    EDITOR = "nano";
-  };
-
-  idx = {
-    extensions = [
-      "Dart-Code.flutter"
-      "Dart-Code.dart-code"
-    ];
-
-    workspace = {
-      onCreate = { };
-
-      onStart = {
-        autoRun = ''
-          echo "Running auto.sh..."
-          chmod +x ./auto.sh
-          ./auto.sh
-        '';
-      };
-    };
-
-    previews = {
-      enable = false;
-    };
-  };
-}
-EOF
-
-      echo "IDX VPS SETUP completed."
-      read -p "Press ENTER to return..."
-      ;;
-
-    4)
-      clear
-      echo "Starting KVM VPS setup..."
-      loading
-
-      bash <(curl -fsSL https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/vm/dd.sh)
-
-      echo "First KVM script completed."
-      loading
-
-      bash <(curl -fsSL https://raw.githubusercontent.com/JishnuTheGamer/Vps/refs/heads/main/n)
-
-      echo "KVM VPS setup completed."
-      read -p "Press ENTER to return..."
-      ;;
-
-    0)
-      echo "Exiting..."
-      exit 0
-      ;;
-
-    *)
-      echo "Invalid option."
-      sleep 1
-      ;;
-  esac
+esac
 done

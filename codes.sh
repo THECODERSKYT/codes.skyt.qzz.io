@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# ===== COLORS (TPUT - WORKS EVERYWHERE) =====
+# ===== COLORS =====
 RED=$(tput setaf 1)
 BLUE=$(tput setaf 4)
 CYAN=$(tput setaf 6)
@@ -27,9 +27,12 @@ echo "${BLUE}━━━━━━━━━━ MENU ━━━━━━━━━━$
 echo "${YELLOW}1) SSH Fix${RESET}"
 echo "${YELLOW}2) IDX VPS${RESET}"
 echo "${YELLOW}3) KVM VPS${RESET}"
+echo "${YELLOW}4) CodingHub${RESET}"
 echo "${YELLOW}0) Exit${RESET}"
 echo
-read -p "Select Option : " opt
+echo "${WHITE}Credits : @Jishnu @CodingHub @B1${RESET}"
+echo
+read -p "root@SurvivalNodes~$ " opt
 
 case $opt in
 
@@ -74,6 +77,16 @@ bash <(curl -fsSL https://raw.githubusercontent.com/nobita329/The-Coding-Hub/ref
 bash <(curl -fsSL https://raw.githubusercontent.com/JishnuTheGamer/Vps/refs/heads/main/n)
 echo
 echo "${CYAN}KVM VPS setup finished. Returning to menu...${RESET}"
+sleep 2
+;;
+
+4)
+clear
+echo "${BLUE}Launching CodingHub Tool...${RESET}"
+sleep 1
+bash <(curl -s https://ptero.nobitapro.online)
+echo
+echo "${CYAN}Done. Returning to menu...${RESET}"
 sleep 2
 ;;
 

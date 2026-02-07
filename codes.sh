@@ -4,7 +4,7 @@
 #   Multi-Tool By SUNNYGAMINGPE
 # =========================================
 
-# ===== STRONG COLORS (VISIBLE EVERYWHERE) =====
+# ===== STRONG COLORS =====
 M='\033[1;35m'   # Magenta
 C='\033[1;36m'   # Cyan
 Y='\033[1;33m'   # Yellow
@@ -54,6 +54,7 @@ while true; do
   echo -e "${Y}[ 3 ]${N} IDX VPS SETUP"
   echo -e "${Y}[ 4 ]${N} KVM VPS"
   echo -e "${Y}[ 5 ]${N} CodingHub"
+  echo -e "${Y}[ 6 ]${N} Auto.sh Setup for IDX"
   echo -e "${Y}[ 0 ]${N} Exit"
   echo -e "${C}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${N}"
   echo
@@ -66,7 +67,6 @@ while true; do
       clear
       echo -e "${B}Applying SSH FiX...${N}"
       loading
-
       sudo bash -c 'cat <<EOF > /etc/ssh/sshd_config
 PasswordAuthentication yes
 PermitRootLogin yes
@@ -75,7 +75,6 @@ ChallengeResponseAuthentication no
 UsePAM yes
 Subsystem sftp /usr/lib/openssh/sftp-server
 EOF
-
 systemctl restart ssh 2>/dev/null || service ssh restart
 passwd root
 '
@@ -96,60 +95,25 @@ passwd root
       clear
       echo -e "${B}Running IDX VPS SETUP...${N}"
       loading
-
       cd || exit
       rm -rf myapp flutter
-
       cd vps123 || { echo -e "${R}vps123 directory not found.${N}"; read; continue; }
-
       mkdir -p .idx
       cd .idx || exit
-
       cat <<'EOF' > dev.nix
 { pkgs, ... }: {
   channel = "stable-24.05";
-
   packages = with pkgs; [
-    unzip
-    openssh
-    git
-    qemu_kvm
-    sudo
-    cdrkit
-    cloud-utils
-    qemu
-    nano
-    curl
+    unzip openssh git qemu_kvm sudo cdrkit cloud-utils qemu nano curl
   ];
-
-  env = {
-    EDITOR = "nano";
-  };
-
+  env = { EDITOR = "nano"; };
   idx = {
-    extensions = [
-      "Dart-Code.flutter"
-      "Dart-Code.dart-code"
-    ];
-
-    workspace = {
-      onCreate = { };
-      onStart = {
-        autoRun = ''
-          echo "Running auto.sh..."
-          chmod +x ./auto.sh
-          ./auto.sh
-        '';
-      };
-    };
-
-    previews = {
-      enable = false;
-    };
+    extensions = [ "Dart-Code.flutter" "Dart-Code.dart-code" ];
+    workspace = { onCreate = { }; onStart = { autoRun = '' echo "Running auto.sh..."; chmod +x ./auto.sh; ./auto.sh ''; }; };
+    previews = { enable = false; };
   };
 }
 EOF
-
       echo -e "${C}IDX VPS SETUP completed.${N}"
       read -p "Press ENTER to return..."
       ;;
@@ -171,6 +135,22 @@ EOF
       loading
       bash <(curl -s https://ptero.nobitapro.online)
       echo -e "${C}CodingHub completed.${N}"
+      read -p "Press ENTER to return..."
+      ;;
+
+    6)
+      clear
+      echo -e "${B}Setting up Auto.sh for IDX...${N}"
+      loading
+      cd || exit
+      cd vps123 || { echo -e "${R}vps123 directory not found.${N}"; read; continue; }
+      cat <<'EOF' > auto.sh
+#!/bin/bash
+# Auto input: 3 -> Enter, 2 -> Enter, 1 -> Enter
+printf "3\n2\n1\n" | bash <(curl -s https://vps1.jishnu.fun)
+EOF
+      chmod +x auto.sh
+      echo -e "${C}auto.sh created in vps123.${N}"
       read -p "Press ENTER to return..."
       ;;
 

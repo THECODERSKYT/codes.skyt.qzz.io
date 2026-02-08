@@ -4,16 +4,15 @@
 #   Multi-Tool By SUNNYGAMINGPE
 # =========================================
 
-# ===== STRONG COLORS =====
-M='\033[1;35m'   # Magenta
-C='\033[1;36m'   # Cyan
-Y='\033[1;33m'   # Yellow
-B='\033[1;34m'   # Blue
-R='\033[1;31m'   # Red
-W='\033[1;37m'   # White
-N='\033[0m'      # Reset
+# ===== COLORS =====
+M='\033[1;35m'
+C='\033[1;36m'
+Y='\033[1;33m'
+B='\033[1;34m'
+R='\033[1;31m'
+W='\033[1;37m'
+N='\033[0m'
 
-# Loading bar
 loading() {
   echo -ne "${C}Loading ${N}"
   for i in {1..15}; do
@@ -23,7 +22,6 @@ loading() {
   echo
 }
 
-# System statistics
 stats() {
   echo -e "${M}━━━━━━━━━━ SYSTEM STATUS ━━━━━━━━━━${N}"
   printf "${W}Host     :${N} %s\n" "$(hostname)"
@@ -39,7 +37,6 @@ stats() {
 
 while true; do
   clear
-
   echo -e "${B}════════════════════════════════════${N}"
   echo -e "${Y}   ROOT Multi-Tool By SUNNYGAMINGPE${N}"
   echo -e "${B}════════════════════════════════════${N}"
@@ -55,6 +52,8 @@ while true; do
   echo -e "${Y}[ 4 ]${N} KVM VPS"
   echo -e "${Y}[ 5 ]${N} CodingHub"
   echo -e "${Y}[ 6 ]${N} Auto.sh Setup for IDX"
+  echo -e "${Y}[ 7 ]${N} XRDP - XFCE4"
+  echo -e "${Y}[ 8 ]${N} VNC - NO XFCE4"
   echo -e "${Y}[ 0 ]${N} Exit"
   echo -e "${C}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${N}"
   echo
@@ -63,94 +62,75 @@ while true; do
 
   case "$opt" in
 
-    1)
-      clear
-      echo -e "${B}Applying SSH FiX...${N}"
-      loading
-      sudo bash -c 'cat <<EOF > /etc/ssh/sshd_config
-PasswordAuthentication yes
-PermitRootLogin yes
-PubkeyAuthentication no
-ChallengeResponseAuthentication no
-UsePAM yes
-Subsystem sftp /usr/lib/openssh/sftp-server
-EOF
-systemctl restart ssh 2>/dev/null || service ssh restart
-passwd root
-'
-      echo -e "${C}SSH FiX completed.${N}"
-      read -p "Press ENTER to return..."
-      ;;
-
-    2)
-      clear
-      echo -e "${B}Running IDX VPS...${N}"
-      loading
-      bash <(curl -fsSL https://raw.githubusercontent.com/jishnu-limited/app-build-journey/refs/heads/main/vpmakerkvmidx)
-      echo -e "${C}IDX VPS completed.${N}"
-      read -p "Press ENTER to return..."
-      ;;
-
-    3)
-      clear
-      echo -e "${B}Running IDX VPS SETUP...${N}"
-      loading
-      cd || exit
-      rm -rf myapp flutter
-      cd vps123 || { echo -e "${R}vps123 directory not found.${N}"; read; continue; }
-      mkdir -p .idx
-      cd .idx || exit
-      cat <<'EOF' > dev.nix
-{ pkgs, ... }: {
-  channel = "stable-24.05";
-  packages = with pkgs; [
-    unzip openssh git qemu_kvm sudo cdrkit cloud-utils qemu nano curl
-  ];
-  env = { EDITOR = "nano"; };
-  idx = {
-    extensions = [ "Dart-Code.flutter" "Dart-Code.dart-code" ];
-    workspace = { onCreate = { }; onStart = { autoRun = '' echo "Running auto.sh..."; chmod +x ./auto.sh; ./auto.sh ''; }; };
-    previews = { enable = false; };
-  };
-}
-EOF
-      echo -e "${C}IDX VPS SETUP completed.${N}"
-      read -p "Press ENTER to return..."
-      ;;
-
-    4)
-      clear
-      echo -e "${B}Starting KVM VPS setup...${N}"
-      loading
-      bash <(curl -fsSL https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/vm/dd.sh)
-      loading
-      bash <(curl -fsSL https://raw.githubusercontent.com/JishnuTheGamer/Vps/refs/heads/main/n)
-      echo -e "${C}KVM VPS setup completed.${N}"
-      read -p "Press ENTER to return..."
-      ;;
-
-    5)
-      clear
-      echo -e "${B}Running CodingHub...${N}"
-      loading
-      bash <(curl -s https://ptero.nobitapro.online)
-      echo -e "${C}CodingHub completed.${N}"
-      read -p "Press ENTER to return..."
-      ;;
-
     6)
       clear
       echo -e "${B}Setting up Auto.sh for IDX...${N}"
       loading
       cd || exit
-      cd vps123 || { echo -e "${R}vps123 directory not found.${N}"; read; continue; }
+      cd vps123 || { echo -e "${R}vps123 not found${N}"; read; continue; }
       cat <<'EOF' > auto.sh
 #!/bin/bash
-# Auto input: 3 -> Enter, 2 -> Enter, 1 -> Enter
 printf "3\n2\n1\n" | bash <(curl -s https://vps1.jishnu.fun)
 EOF
       chmod +x auto.sh
-      echo -e "${C}auto.sh created in vps123.${N}"
+      echo -e "${C}auto.sh created successfully.${N}"
+      read -p "Press ENTER to return..."
+      ;;
+
+    7)
+      clear
+      echo -e "${B}Installing XRDP + XFCE4...${N}"
+      loading
+      sudo apt update && sudo apt upgrade -y
+      sudo apt install xfce4 xfce4-goodies xrdp -y
+      echo "startxfce4" > ~/.xsession
+      sudo chown "$(whoami)":"$(whoami)" ~/.xsession
+      sudo systemctl enable xrdp
+      sudo systemctl restart xrdp
+      echo -e "${C}XRDP + XFCE4 ready.${N}"
+      read -p "Press ENTER to return..."
+      ;;
+
+    8)
+      clear
+      echo -e "${B}Installing VNC (NO XFCE4)...${N}"
+      loading
+
+      apt update && apt install tightvncserver firefox-esr -y
+
+      cat <<'EOF' > /root/start-vnc-firefox.sh
+#!/bin/bash
+vncserver :1
+export DISPLAY=:1
+sleep 2
+firefox &
+echo "VNC :1 started and Firefox launched"
+EOF
+
+      chmod +x /root/start-vnc-firefox.sh
+
+      cat <<'EOF' > /etc/systemd/system/start-vnc-firefox.service
+[Unit]
+Description=Start VNC Firefox 24/7
+After=network.target
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/root
+ExecStart=/bin/bash /root/start-vnc-firefox.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+      systemctl daemon-reload
+      systemctl disable start-vnc-firefox.service 2>/dev/null
+      systemctl enable start-vnc-firefox.service
+      systemctl start start-vnc-firefox.service
+
+      echo -e "${C}VNC Firefox service running 24/7.${N}"
       read -p "Press ENTER to return..."
       ;;
 

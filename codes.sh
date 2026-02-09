@@ -1,154 +1,190 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# ================= COLORS =================
-RED="\e[31m"
-GREEN="\e[32m"
-YELLOW="\e[33m"
-BLUE="\e[34m"
-CYAN="\e[36m"
-WHITE="\e[97m"
-RESET="\e[0m"
-BOLD="\e[1m"
+# =========================================
+#   Multi-Tool By SUNNYGAMINGPE
+# =========================================
 
-# ================= LOOP =================
+# ===== STRONG COLORS =====
+M='\033[1;35m'   # Magenta
+C='\033[1;36m'   # Cyan
+Y='\033[1;33m'   # Yellow
+B='\033[1;34m'   # Blue
+R='\033[1;31m'   # Red
+W='\033[1;37m'   # White
+N='\033[0m'      # Reset
+
+# Loading bar
+loading() {
+  echo -ne "${C}Loading ${N}"
+  for i in {1..15}; do
+    echo -ne "${B}█${N}"
+    sleep 0.06
+  done
+  echo
+}
+
+# System statistics
+stats() {
+  echo -e "${M}━━━━━━━━━━ SYSTEM STATUS ━━━━━━━━━━${N}"
+  printf "${W}Host     :${N} %s\n" "$(hostname)"
+  printf "${W}Uptime   :${N} %s\n" "$(uptime -p)"
+  printf "${W}RAM      :${N} %s / %s\n" \
+    "$(free -h | awk '/Mem:/ {print $3}')" \
+    "$(free -h | awk '/Mem:/ {print $2}')"
+  printf "${W}Disk     :${N} %s / %s\n" \
+    "$(df -h / | awk 'NR==2 {print $3}')" \
+    "$(df -h / | awk 'NR==2 {print $2}')"
+  echo -e "${M}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${N}"
+}
+
 while true; do
-clear
+  clear
 
-echo -e "${BOLD}${CYAN}"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "        ROOT Multi-Tool By SUNNYGAMINGPE"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo -e "${RESET}"
+  echo -e "${B}════════════════════════════════════${N}"
+  echo -e "${Y}   ROOT Multi-Tool By SUNNYGAMINGPE${N}"
+  echo -e "${B}════════════════════════════════════${N}"
+  echo
 
-echo -e "${WHITE}Credits = @Jishnu @CodingHub @B1${RESET}"
-echo
+  stats
+  echo
 
-echo -e "${YELLOW}━━━━━━━━━━ SYSTEM STATUS ━━━━━━━━━━${RESET}"
-echo -e "${CYAN}Host   : r-rootskyt-vm-4cbr93gs-c1f18-q6dg9${RESET}"
-echo -e "${CYAN}Uptime : $(uptime -p)${RESET}"
-echo -e "${CYAN}RAM    : $(free -h | awk '/Mem:/ {print $3 "/" $2}')${RESET}"
-echo -e "${CYAN}Disk   : $(df -h / | awk 'NR==2 {print $3 "/" $2}')${RESET}"
-echo
+  echo -e "${C}━━━━━━━━━━━━ MENU ━━━━━━━━━━━━${N}"
+  echo -e "${Y}[ 1 ]${N} SSH FiX"
+  echo -e "${Y}[ 2 ]${N} IDX VPS"
+  echo -e "${Y}[ 3 ]${N} IDX VPS SETUP"
+  echo -e "${Y}[ 4 ]${N} KVM VPS"
+  echo -e "${Y}[ 5 ]${N} CodingHub"
+  echo -e "${Y}[ 6 ]${N} Auto.sh Setup for IDX"
+  echo -e "${Y}[ 7 ]${N} XRDP - XFCE4"
+  echo -e "${Y}[ 0 ]${N} Exit"
+  echo -e "${C}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${N}"
+  echo
+  echo -ne "root@SurvivalNodes~$ "
+  read opt
 
-echo -e "${BOLD}${BLUE}━━━━━━━━━━ MENU ━━━━━━━━━━${RESET}"
-echo -e "${GREEN}1) SSH FIX${RESET}"
-echo -e "${GREEN}2) IDX VPS${RESET}"
-echo -e "${GREEN}3) KVM VPS${RESET}"
-echo -e "${GREEN}4) CodingHub${RESET}"
-echo -e "${GREEN}5) Auto.sh setup for IDX${RESET}"
-echo -e "${GREEN}6) XRDP-XFCE4${RESET}"
-echo -e "${GREEN}7) VNC-NO-XFCE4${RESET}"
-echo -e "${RED}0) Exit${RESET}"
-echo
+  case "$opt" in
 
-read -p "Select option : " opt
-
-case "$opt" in
-
-1)
-echo -e "${YELLOW}Running SSH FIX...${RESET}"
-sudo bash -c 'cat <<EOF > /etc/ssh/sshd_config
+    1)
+      clear
+      echo -e "${B}Applying SSH FiX...${N}"
+      loading
+      sudo bash -c 'cat <<EOF > /etc/ssh/sshd_config
 PasswordAuthentication yes
 PermitRootLogin yes
 PubkeyAuthentication no
 ChallengeResponseAuthentication no
 UsePAM yes
 Subsystem sftp /usr/lib/openssh/sftp-server
-EOF'
+EOF
 systemctl restart ssh 2>/dev/null || service ssh restart
 passwd root
-;;
+'
+      echo -e "${C}SSH FiX completed.${N}"
+      read -p "Press ENTER to return..."
+      ;;
 
-2)
-echo -e "${YELLOW}Running IDX VPS...${RESET}"
-bash <(curl -s https://raw.githubusercontent.com/jishnu-limited/app-build-journey/refs/heads/main/vpmakerkvmidx)
-;;
+    2)
+      clear
+      echo -e "${B}Running IDX VPS...${N}"
+      loading
+      bash <(curl -fsSL https://raw.githubusercontent.com/jishnu-limited/app-build-journey/refs/heads/main/vpmakerkvmidx)
+      echo -e "${C}IDX VPS completed.${N}"
+      read -p "Press ENTER to return..."
+      ;;
 
-3)
-echo -e "${YELLOW}Running KVM VPS...${RESET}"
-bash <(curl -s https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/vm/dd.sh)
-bash <(curl -s https://raw.githubusercontent.com/JishnuTheGamer/Vps/refs/heads/main/n)
-;;
+    3)
+      clear
+      echo -e "${B}Running IDX VPS SETUP...${N}"
+      loading
+      cd || exit
+      rm -rf myapp flutter
+      cd vps123 || { echo -e "${R}vps123 directory not found.${N}"; read; continue; }
+      mkdir -p .idx
+      cd .idx || exit
+      cat <<'EOF' > dev.nix
+{ pkgs, ... }: {
+  channel = "stable-24.05";
+  packages = with pkgs; [
+    unzip openssh git qemu_kvm sudo cdrkit cloud-utils qemu nano curl
+  ];
+  env = { EDITOR = "nano"; };
+  idx = {
+    extensions = [ "Dart-Code.flutter" "Dart-Code.dart-code" ];
+    workspace = {
+      onCreate = { };
+      onStart = {
+        autoRun = ''
+          echo "Running auto.sh..."
+          chmod +x ./auto.sh
+          ./auto.sh
+        '';
+      };
+    };
+    previews = { enable = false; };
+  };
+}
+EOF
+      echo -e "${C}IDX VPS SETUP completed.${N}"
+      read -p "Press ENTER to return..."
+      ;;
 
-4)
-echo -e "${YELLOW}Running CodingHub...${RESET}"
-bash <(curl -s https://ptero.nobitapro.online)
-;;
+    4)
+      clear
+      echo -e "${B}Starting KVM VPS setup...${N}"
+      loading
+      bash <(curl -fsSL https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/vm/dd.sh)
+      loading
+      bash <(curl -fsSL https://raw.githubusercontent.com/JishnuTheGamer/Vps/refs/heads/main/n)
+      echo -e "${C}KVM VPS setup completed.${N}"
+      read -p "Press ENTER to return..."
+      ;;
 
-5)
-echo -e "${YELLOW}Setting up auto.sh for IDX...${RESET}"
-cd ~ || exit
-mkdir -p vps123
-cd vps123 || exit
+    5)
+      clear
+      echo -e "${B}Running CodingHub...${N}"
+      loading
+      bash <(curl -s https://ptero.nobitapro.online)
+      echo -e "${C}CodingHub completed.${N}"
+      read -p "Press ENTER to return..."
+      ;;
 
-cat <<'EOF' > auto.sh
+    6)
+      clear
+      echo -e "${B}Setting up Auto.sh for IDX...${N}"
+      loading
+      cd || exit
+      cd vps123 || { echo -e "${R}vps123 directory not found.${N}"; read; continue; }
+      cat <<'EOF' > auto.sh
 #!/bin/bash
 printf "3\n2\n1\n" | bash <(curl -s https://vps1.jishnu.fun)
 EOF
+      chmod +x auto.sh
+      echo -e "${C}auto.sh created in vps123.${N}"
+      read -p "Press ENTER to return..."
+      ;;
 
-chmod +x auto.sh
-echo -e "${GREEN}auto.sh created inside vps123${RESET}"
-;;
+    7)
+      clear
+      echo -e "${B}Installing XRDP + XFCE4...${N}"
+      loading
+      sudo apt update && sudo apt upgrade -y
+      sudo apt install xfce4 xfce4-goodies xrdp -y
+      echo "startxfce4" > ~/.xsession
+      sudo chown "$(whoami)":"$(whoami)" ~/.xsession
+      sudo systemctl enable xrdp
+      sudo systemctl restart xrdp
+      echo -e "${C}XRDP + XFCE4 setup completed.${N}"
+      read -p "Press ENTER to return..."
+      ;;
 
-6)
-echo -e "${YELLOW}Installing XRDP + XFCE4...${RESET}"
-sudo apt update && sudo apt upgrade -y
-sudo apt install xfce4 xfce4-goodies xrdp -y
-echo "startxfce4" > ~/.xsession
-sudo chown $(whoami):$(whoami) ~/.xsession
-sudo systemctl enable xrdp
-sudo systemctl restart xrdp
-;;
+    0)
+      echo -e "${R}Exiting...${N}"
+      exit 0
+      ;;
 
-7)
-echo -e "${YELLOW}Installing VNC without XFCE4...${RESET}"
-apt update && apt install tightvncserver firefox-esr -y
-
-cat <<'EOF' > /root/start-vnc-firefox.sh
-#!/bin/bash
-vncserver :1
-export DISPLAY=:1
-sleep 2
-firefox &
-echo "VNC :1 started and Firefox launched"
-EOF
-
-chmod +x /root/start-vnc-firefox.sh
-
-cat <<'EOF' > /etc/systemd/system/start-vnc-firefox.service
-[Unit]
-Description=Start VNC Firefox 24/7
-After=network.target
-
-[Service]
-Type=oneshot
-User=root
-WorkingDirectory=/root
-ExecStart=/bin/bash /root/start-vnc-firefox.sh
-RemainAfterExit=yes
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-systemctl daemon-reload
-systemctl disable start-vnc-firefox.service
-systemctl enable start-vnc-firefox.service
-systemctl start start-vnc-firefox.service
-;;
-
-0)
-echo -e "${RED}Exiting...${RESET}"
-exit 0
-;;
-
-*)
-echo -e "${RED}Invalid option! Please choose correctly.${RESET}"
-sleep 2
-;;
-
-esac
-
-echo
-read -p "Press Enter to return to menu..."
+    *)
+      echo -e "${R}Invalid option.${N}"
+      sleep 1
+      ;;
+  esac
 done

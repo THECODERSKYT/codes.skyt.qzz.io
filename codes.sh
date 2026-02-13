@@ -56,6 +56,7 @@ while true; do
   echo -e "${Y}[ 5 ]${N} CodingHub"
   echo -e "${Y}[ 6 ]${N} Auto.sh Setup for IDX"
   echo -e "${Y}[ 7 ]${N} XRDP - XFCE4"
+  echo -e "${Y}[ 8 ]${N} FRP Installer Updater"
   echo -e "${Y}[ 0 ]${N} Exit"
   echo -e "${C}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${N}"
   echo
@@ -174,6 +175,15 @@ EOF
       sudo systemctl enable xrdp
       sudo systemctl restart xrdp
       echo -e "${C}XRDP + XFCE4 setup completed.${N}"
+      read -p "Press ENTER to return..."
+      ;;
+
+    8)
+      clear
+      echo -e "${M} Launching FRP Installer Updater ${N}"
+      loading
+      bash <(curl -fsSL https://raw.githubusercontent.com/THECODERSKYT/codes.skyt.qzz.io/refs/heads/main/frp.sh)
+      echo -e "${C}FRP Installer Updater completed.${N}"
       read -p "Press ENTER to return..."
       ;;
 

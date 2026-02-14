@@ -58,6 +58,7 @@ while true; do
   echo -e "${Y}[ 7 ]${N} XRDP - XFCE4"
   echo -e "${Y}[ 8 ]${N} FRP Installer Updater"
   echo -e "${Y}[ 9 ]${N} FRP-Services"
+  echo -e "${Y}[ 10 ]${N} FRP Manager"
   echo -e "${Y}[ 0 ]${N} Exit"
   echo -e "${C}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${N}"
   echo
@@ -194,6 +195,15 @@ EOF
       loading
       bash <(curl -fsSL https://raw.githubusercontent.com/THECODERSKYT/codes.skyt.qzz.io/refs/heads/main/frpc-services.sh)
       echo -e "${C}FRP-Services completed.${N}"
+      read -p "Press ENTER to return..."
+      ;;
+
+    10)
+      clear
+      echo -e "${M}Launching FRP Manager${N}"
+      loading
+      bash <(curl -fsSL https://raw.githubusercontent.com/THECODERSKYT/codes.skyt.qzz.io/refs/heads/main/frp-create.sh)
+      echo -e "${C}FRP Manage completed.${N}"
       read -p "Press ENTER to return..."
       ;;
 

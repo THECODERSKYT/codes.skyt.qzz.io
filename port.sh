@@ -140,8 +140,8 @@ stop_all() {
 # --- MAIN MENU ---
 while true; do
     banner
-    echo -e "   ${C}[1]${RST} ${W}Create Stream${RST}   ${C}[2]${RST} ${W}List Streams${RST}"
-    echo -e "   ${C}[3]${RST} ${W}Stop Stream${RST}     ${C}[4]${RST} ${W}Stop All${RST}"
+    echo -e "   ${C}[1]${RST} ${W}Create Port${RST}   ${C}[2]${RST} ${W}List Ports${RST}"
+    echo -e "   ${C}[3]${RST} ${W}Stop Ports${RST}     ${C}[4]${RST} ${W}Stop All${RST}"
     echo -e "   ${R}[0]${RST} ${W}Exit ROOTPORT${RST}"
     echo ""
     echo -en "   ${C}${B}ROOTPORT-V1 > ${RST}"

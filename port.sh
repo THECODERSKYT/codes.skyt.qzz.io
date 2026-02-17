@@ -27,7 +27,7 @@ banner() {
     clear
     echo -e "${C}   ╔════════════════════════════════════════════════════╗${RST}"
     echo -e "${C}   ║                                                    ║${RST}"
-    echo -e "${C}   ║         ${W}${B}⚡  ROOTPORT V1 - PORT FORWARDER  ⚡${RST}${C}           ║${RST}"
+    echo -e "${C}   ║        ${W}${B}⚡  ROOTPORT V1 - PORT FORWARDER  ⚡${RST}${C}        ║${RST}"
     echo -e "${C}   ║                                                    ║${RST}"
     echo -e "${C}   ║          ${D}Status: ONLINE | Secure Tunnel${RST}${C}           ║${RST}"
     echo -e "${C}   ╚════════════════════════════════════════════════════╝${RST}"

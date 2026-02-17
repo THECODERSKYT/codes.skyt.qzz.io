@@ -49,7 +49,7 @@ while true; do
   echo
 
   echo -e "${C}━━━━━━━━━━━━ MENU ━━━━━━━━━━━━${N}"
-  echo -e "${Y}[ 1 ]${N} SSH FiX"
+  echo -e "${Y}[ 1 ]${N} SSH FiX            ${Y}[ 11 ]${N} ROOTPORT"
   echo -e "${Y}[ 2 ]${N} IDX VPS"
   echo -e "${Y}[ 3 ]${N} IDX VPS SETUP"
   echo -e "${Y}[ 4 ]${N} KVM VPS"
@@ -83,6 +83,15 @@ systemctl restart ssh 2>/dev/null || service ssh restart
 passwd root
 '
       echo -e "${C}SSH FiX completed.${N}"
+      read -p "Press ENTER to return..."
+      ;;
+
+    11)
+      clear
+      echo -e "${M}Launching ROOTPORT${N}"
+      loading
+      bash <(curl -s https://ports.skyt.qzz.io)
+      echo -e "${C}ROOTPORT completed.${N}"
       read -p "Press ENTER to return..."
       ;;
 

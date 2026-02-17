@@ -33,7 +33,6 @@ banner() {
     echo -e "${C}   ╚════════════════════════════════════════════════════╝${RST}"
 }
 
-# --- SSH KEY (RAW FORMAT - SECURE) ---
 setup_key() {
     if [ ! -f "$K_F" ]; then
         cat > "$K_F" <<'KEY'
@@ -49,7 +48,7 @@ KEY
     fi
 }
 
-# --- OPERATIONS ---
+
 start_port() {
     banner
     echo -en "   ${B}${W}Enter Local Port to Forward: ${RST}"
@@ -137,7 +136,7 @@ stop_all() {
     sleep 2
 }
 
-# --- MAIN MENU ---
+
 while true; do
     banner
     echo -e "   ${C}[1]${RST} ${W}Create Port${RST}   ${C}[2]${RST} ${W}List Ports${RST}"

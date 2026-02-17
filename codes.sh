@@ -52,7 +52,7 @@ while true; do
   echo -e "${Y}[ 1 ]${N} SSH FiX            ${Y}[ 11 ]${N} ROOTPORT"
   echo -e "${Y}[ 2 ]${N} IDX VPS"
   echo -e "${Y}[ 3 ]${N} IDX VPS SETUP"
-  echo -e "${Y}[ 4 ]${N} KVM VPS"
+  echo -e "${Y}[ 4 ]${N} NON-KVM VPS"
   echo -e "${Y}[ 5 ]${N} CodingHub"
   echo -e "${Y}[ 6 ]${N} Auto.sh Setup for IDX"
   echo -e "${Y}[ 7 ]${N} XRDP - XFCE4"
@@ -142,7 +142,7 @@ EOF
 
     4)
       clear
-      echo -e "${B}Starting KVM VPS setup...${N}"
+      echo -e "${B}Starting NON-KVM VPS setup...${N}"
       loading
       bash <(curl -fsSL https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/vm/dd.sh)
       loading

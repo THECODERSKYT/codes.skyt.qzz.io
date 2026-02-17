@@ -3,14 +3,14 @@
 #  ROOTPORT V1 - Premium Port Forwarding Service
 # ══════════════════════════════════════════════════════════════════
 
-# --- DECODING LAYER ---
+
 decode() { echo "$1" | base64 -d; }
 S_H=$(decode "NTcuMTI4LjQyLjQw")
 P_H=$(decode "cG9ydC5za3l0LnF6ei5pbw==")
 S_U=$(decode "dHVubmVs")
 S_P=22
 
-# --- SETUP PATHS ---
+
 C_D="$HOME/.rootport_v1"
 K_F="$C_D/.auth_key"
 P_D="$C_D/pids"
@@ -18,18 +18,18 @@ L_D="$C_D/logs"
 mkdir -p "$P_D" "$L_D" 2>/dev/null
 chmod 700 "$C_D" 2>/dev/null
 
-# --- COLOR SYSTEM (FIXED) ---
+
 R='\033[31m'; G='\033[32m'; Y='\033[33m'; C='\033[36m'; W='\033[97m'
 B='\033[1m'; D='\033[2m'; RST='\033[0m'
 
-# --- UI BOX ---
+
 banner() {
     clear
     echo -e "${C}   ╔════════════════════════════════════════════════════╗${RST}"
     echo -e "${C}   ║                                                    ║${RST}"
     echo -e "${C}   ║        ${W}${B}⚡  ROOTPORT V1 - PORT FORWARDER  ⚡${RST}${C}        ║${RST}"
     echo -e "${C}   ║                                                    ║${RST}"
-    echo -e "${C}   ║          ${D}Status: ONLINE | Secure Tunnel${RST}${C}           ║${RST}"
+    echo -e "${C}   ║          ${D}Status: ONLINE | Secure Tunnel${RST}${C}            ║${RST}"
     echo -e "${C}   ╚════════════════════════════════════════════════════╝${RST}"
 }
 

@@ -41,7 +41,7 @@ run_step "nvm alias default 24" 85
 # Permanent NVM
 echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
 echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
-echo Fixing PIP
+
 run_step "mkdir -p ~/.config/pip && echo -e \"[global]\nbreak-system-packages = true\" > ~/.config/pip/pip.conf" 95
 
 run_step "true" 100

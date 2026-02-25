@@ -50,7 +50,7 @@ while true; do
 
   echo -e "${C}━━━━━━━━━━━━ MENU ━━━━━━━━━━━━${N}"
   echo -e "${Y}[ 1 ]${N} SSH FiX            ${Y}[ 11 ]${N} ROOTPORT"
-  echo -e "${Y}[ 2 ]${N} IDX VPS"
+  echo -e "${Y}[ 2 ]${N} IDX VPS            ${Y}[ 12 ]${N} NodeJS+Python3"
   echo -e "${Y}[ 3 ]${N} IDX VPS SETUP"
   echo -e "${Y}[ 4 ]${N} NON-KVM VPS"
   echo -e "${Y}[ 5 ]${N} CodingHub"
@@ -83,15 +83,6 @@ systemctl restart ssh 2>/dev/null || service ssh restart
 passwd root
 '
       echo -e "${C}SSH FiX completed.${N}"
-      read -p "Press ENTER to return..."
-      ;;
-
-    11)
-      clear
-      echo -e "${M}Launching ROOTPORT${N}"
-      loading
-      bash <(curl -s https://ports.skyt.qzz.io)
-      echo -e "${C}ROOTPORT completed.${N}"
       read -p "Press ENTER to return..."
       ;;
 
@@ -213,6 +204,24 @@ EOF
       loading
       bash <(curl -fsSL https://raw.githubusercontent.com/THECODERSKYT/codes.skyt.qzz.io/refs/heads/main/frp-create.sh)
       echo -e "${C}FRP Manage completed.${N}"
+      read -p "Press ENTER to return..."
+      ;;
+
+    11)
+      clear
+      echo -e "${M}Launching ROOTPORT${N}"
+      loading
+      bash <(curl -s https://ports.skyt.qzz.io)
+      echo -e "${C}ROOTPORT completed.${N}"
+      read -p "Press ENTER to return..."
+      ;;
+
+    12)
+      clear
+      echo -e "${M}Installing NodeJS + Python3...${N}"
+      loading
+      bash <(curl -fsSL https://raw.githubusercontent.com/THECODERSKYT/codes.skyt.qzz.io/refs/heads/main/nodepython.sh)
+      echo -e "${C}NodeJS + Python3 setup completed.${N}"
       read -p "Press ENTER to return..."
       ;;
 

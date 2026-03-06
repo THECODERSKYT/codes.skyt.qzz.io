@@ -253,7 +253,7 @@ echo -e "\e[1;93m    Made By ROOT@SUNNY SUNNYGAMINGPE\e[0m"
 echo -e "\e[1;95m====================================\e[0m"
 
 echo ""
-
+echo -e "\e[1;94mServer IP : $ADDR\e[0m"
 echo -e "\e[1;32mConfigured Proxies:\e[0m"
 
 list_proxies

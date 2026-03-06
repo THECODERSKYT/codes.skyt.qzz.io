@@ -55,7 +55,7 @@ rm -rf "$TMP"
 
 echo "$LATEST" > "$INSTALLED"
 
-echo -e "\e[1;92mRoot-Tunnel 1.2 beta installed successfully\e[0m"
+echo -e "\e[1;92mRoot-Tunnel 2.0 beta installed successfully\e[0m"
 
 }
 
@@ -119,14 +119,44 @@ PNAME=$(generate_name)
 
 echo -e "\e[1;36mGenerated Proxy Name: $PNAME\e[0m"
 
-read -p "Type (tcp/udp/http): " PTYPE
+echo ""
+echo "Available Types:"
+echo "(tcp/udp/http/tcp+udp)"
+
+read -p "Type: " PTYPE
+
 read -p "Local IP (default 127.0.0.1): " LIP
 LIP=${LIP:-127.0.0.1}
+
 read -p "Local Port: " LPORT
 
 RPORT=$(generate_port)
 
 echo -e "\e[1;36mAssigned Remote Port: $RPORT\e[0m"
+
+if [[ "$PTYPE" == "tcp+udp" ]]; then
+
+cat >> "$CONFIG_FILE" <<EOF
+
+
+[[proxies]]
+name = "$PNAME"
+type = "tcp"
+localIP = "$LIP"
+localPort = $LPORT
+remotePort = $RPORT
+
+[[proxies]]
+name = "$PNAME"
+type = "udp"
+localIP = "$LIP"
+localPort = $LPORT
+remotePort = $RPORT
+EOF
+
+echo -e "\e[1;32mTCP + UDP Proxy created\e[0m"
+
+else
 
 cat >> "$CONFIG_FILE" <<EOF
 
@@ -139,7 +169,11 @@ localPort = $LPORT
 remotePort = $RPORT
 EOF
 
-read -p "Proxy created. Press Enter..."
+echo -e "\e[1;32mProxy created\e[0m"
+
+fi
+
+read -p "Press Enter..."
 
 }
 
@@ -230,9 +264,9 @@ esac
 read -p "New value: " NEW
 
 if [ "$Q" = "yes" ]; then
-sed -i "${START},${END}s/^$FIELD.*/$FIELD = \"$NEW\"/" "$CONFIG_FILE"
+sed -i "${START},${END}s|^$FIELD *=.*|$FIELD = \"$NEW\"|" "$CONFIG_FILE"
 else
-sed -i "${START},${END}s/^$FIELD.*/$FIELD = $NEW/" "$CONFIG_FILE"
+sed -i "${START},${END}s|^$FIELD *=.*|$FIELD = $NEW|" "$CONFIG_FILE"
 fi
 
 done
@@ -287,7 +321,7 @@ run_nohup(){
 
 nohup "$BIN/frpc" -c "$CONFIG_FILE" >/dev/null 2>&1 &
 
-echo -e "\e[1;32mTunnel Started in background Using nohup \e[0m"
+echo -e "\e[1;32mTunnel Started in background Using nohup\e[0m"
 
 read -p "Press Enter..."
 
@@ -299,11 +333,17 @@ while true; do
 
 clear
 
-echo -e "\e[1;95m====================================\e[0m"
-echo -e "\e[1;96m           Root-Tunnel\e[0m"
-echo -e "\e[1;93m    Made By ROOT@SUNNY SUNNYGAMINGPE\e[0m"
-echo -e "\e[1;95m====================================\e[0m"
+echo -e "\e[1;95m"
+echo "██████╗  ██████╗  ██████╗ ████████╗    ████████╗██╗   ██╗███╗   ██╗███╗   ██╗███████╗██╗"
+echo "██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝    ╚══██╔══╝██║   ██║████╗  ██║████╗  ██║██╔════╝██║"
+echo "██████╔╝██║   ██║██║   ██║   ██║          ██║   ██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██║"
+echo "██╔══██╗██║   ██║██║   ██║   ██║          ██║   ██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██║"
+echo "██║  ██║╚██████╔╝╚██████╔╝   ██║          ██║   ╚██████╔╝██║ ╚████║██║ ╚████║███████╗███████╗"
+echo "╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝          ╚═╝    ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚══════╝"
+echo -e "\e[0m"
 
+echo -e "\e[1;96mMade By ROOT@SUNNY SUNNYGAMINGPE\e[0m"
+echo -e "\e[1;93mCurrent Version : 2.0 Beta\e[0m"
 echo ""
 echo -e "\e[1;94mServer IP : $ADDR\e[0m"
 echo -e "\e[1;32mConfigured Proxies:\e[0m"
@@ -326,14 +366,12 @@ echo -e "\e[1;95m------------------------------------\e[0m"
 read -p "Select Option: " CH
 
 case $CH in
-
 1) create_proxy ;;
 2) edit_proxy ;;
 3) delete_proxy ;;
 4) restart_tunnel ;;
 5) run_nohup ;;
 0) exit ;;
-
 esac
 
 done

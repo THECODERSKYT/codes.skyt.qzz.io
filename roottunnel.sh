@@ -355,7 +355,7 @@ echo ""
 echo -e "\e[1;95m------------------------------------\e[0m"
 
 echo "1) Create Proxy"
-echo "2) Edit Proxy"
+echo "2) Edit Proxy (deprecated)"
 echo "3) Delete Proxy"
 echo "4) Start Restart Tunnel"
 echo "5) Run Tunnel (Not Recommended)"

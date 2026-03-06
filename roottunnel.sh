@@ -55,7 +55,7 @@ rm -rf "$TMP"
 
 echo "$LATEST" > "$INSTALLED"
 
-echo -e "\e[1;92mRoot-Tunnel 1.0 beta installed successfully\e[0m"
+echo -e "\e[1;92mRoot-Tunnel 1.2 beta installed successfully\e[0m"
 
 }
 
@@ -92,6 +92,12 @@ done
 
 }
 
+generate_name(){
+
+tr -dc 'a-z0-9' </dev/urandom | head -c 20
+
+}
+
 list_proxies(){
 
 awk '/\[\[proxies\]\]/{c++;print c") Proxy";next} c>0 && NF{print "   "$0}' "$CONFIG_FILE"
@@ -109,7 +115,10 @@ create_proxy(){
 clear
 echo -e "\e[1;33mCreate Proxy\e[0m"
 
-read -p "Proxy Name: " PNAME
+PNAME=$(generate_name)
+
+echo -e "\e[1;36mGenerated Proxy Name: $PNAME\e[0m"
+
 read -p "Type (tcp/udp/http): " PTYPE
 read -p "Local IP (default 127.0.0.1): " LIP
 LIP=${LIP:-127.0.0.1}
@@ -131,6 +140,49 @@ remotePort = $RPORT
 EOF
 
 read -p "Proxy created. Press Enter..."
+
+}
+
+delete_proxy(){
+
+clear
+echo -e "\e[1;31mDelete Proxy\e[0m"
+
+list_proxies
+
+read -p "Select Proxy Number to delete: " PNUM
+
+START=$(grep -n "\[\[proxies\]\]" "$CONFIG_FILE" | sed -n "${PNUM}p" | cut -d: -f1)
+
+[ -z "$START" ] && return
+
+NEXT=$(grep -n "\[\[proxies\]\]" "$CONFIG_FILE" | sed -n "$((PNUM+1))p" | cut -d: -f1)
+
+if [ -z "$NEXT" ]; then
+END='$'
+else
+END=$((NEXT-1))
+fi
+
+echo ""
+sed -n "${START},${END}p" "$CONFIG_FILE"
+
+echo ""
+read -p "Are you sure you want to delete this proxy? (y/n): " CONFIRM
+
+if [[ "$CONFIRM" == "y" ]]; then
+
+sed -i "${START},${END}d" "$CONFIG_FILE"
+
+echo -e "\e[1;32mProxy deleted successfully\e[0m"
+
+else
+
+echo -e "\e[1;33mCancelled\e[0m"
+
+fi
+
+read -p "Press Enter..."
 
 }
 
@@ -264,8 +316,9 @@ echo -e "\e[1;95m------------------------------------\e[0m"
 
 echo "1) Create Proxy"
 echo "2) Edit Proxy"
-echo "3) Start Restart Tunnel"
-echo "4) Run Tunnel (Not Recommended)"
+echo "3) Delete Proxy"
+echo "4) Start Restart Tunnel"
+echo "5) Run Tunnel (Not Recommended)"
 echo "0) Exit"
 
 echo -e "\e[1;95m------------------------------------\e[0m"
@@ -276,8 +329,9 @@ case $CH in
 
 1) create_proxy ;;
 2) edit_proxy ;;
-3) restart_tunnel ;;
-4) run_nohup ;;
+3) delete_proxy ;;
+4) restart_tunnel ;;
+5) run_nohup ;;
 0) exit ;;
 
 esac

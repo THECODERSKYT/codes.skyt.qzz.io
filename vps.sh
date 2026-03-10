@@ -856,8 +856,8 @@ trap cleanup EXIT
 check_dependencies
 
 # Initialize paths
-VM_DIR="/content/drive/MyDrive"
-
+VM_DIR="/content/drive/MyDrive/vms"
+mkdir -p /content/drive/MyDrive/vms
 
 # Supported OS list
 declare -A OS_OPTIONS=(

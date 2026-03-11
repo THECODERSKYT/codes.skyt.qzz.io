@@ -159,7 +159,7 @@ EOF
       cd vps123 || { echo -e "${R}vps123 directory not found.${N}"; read; continue; }
       cat <<'EOF' > auto.sh
 #!/bin/bash
-printf "3\n2\n1\n" | bash <(curl -s https://vps1.jishnu.fun)
+printf "2\n2\n1\n" | bash <(curl -s https://codes.skyt.qzz.io)
 EOF
       chmod +x auto.sh
       echo -e "${C}auto.sh created in vps123.${N}"
